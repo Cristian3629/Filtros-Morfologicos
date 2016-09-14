@@ -2,6 +2,13 @@
 #include "Position.h"
 #include "Matrix.h"
 
+
+int posicionesValida(Matrix& patron,Matrix& imagen, Position position){
+  Position posicionMedia(patron.getRow()/2 + 1,patron.getColumn()/2 + 1);
+  int i;
+}
+
+
 int main(int argc, char *argv[]) {
 
   int a = 1;
@@ -9,7 +16,8 @@ int main(int argc, char *argv[]) {
   std::cout << a+b << std::endl;
   std::cout << "Hola soy el principal" << std::endl;
   Position position(1,1);
-  Matrix matrix(3,3);
+  Matrix patron(3,3); //matriz patron
+  Matrix imagen(6,6);
   matrix.dimesions();
   std::cout << "La posicion 1 1 es:" << matrix.positionIsValid(position) << std::endl;
   Position otherPosition(4,4);
