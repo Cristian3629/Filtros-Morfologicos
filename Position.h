@@ -12,6 +12,9 @@ public:
 	Position sum(Position& position);
 	int getColumn();
 	int getRow();
+	void setColumn(int columnNew);
+	void setRow(int rowNew);
+	void print();
 	~Position();
 };
 #endif /* POSITION_H_ */

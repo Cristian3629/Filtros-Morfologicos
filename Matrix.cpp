@@ -1,5 +1,26 @@
 #include "Matrix.h"
 
+Matrix::Matrix(int rows, int column):cantRows(rows),cantColumns(column){
+  matrix = (std::string **)malloc(cantRows*sizeof(std::string*));
+  for(int i = 0; i < rows ; i++){
+    matrix[i]=(std::string*)malloc(cantColumns*sizeof(std::string));
+  }
+}
+
+Matrix::Matrix(const Matrix& otherMatrix):cantRows(otherMatrix.getCantRows()),cantColumns(otherMatrix.getCantColumns()){
+  std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+  this->matrix = (std::string**)malloc(this->cantRows*sizeof(std::string*));
+  int i,j;
+  for(i = 0; i < this->cantRows ; i++){
+    matrix[i]=(std::string*)malloc(cantColumns*sizeof(std::string));
+  }
+  for (i = 1; i <= cantRows; i++) {
+    for (j = 1; j <= cantColumns; j++) {
+      this->setElementPos(i,j,otherMatrix.getElementPos(i,j));
+    }
+  }
+}
+
 //verifica si el num de columna es valido
 bool Matrix::columnPositionValid(int column){
     return 0 < column && column <= this->cantColumns;
@@ -11,19 +32,21 @@ bool Matrix::rowPositionValid(int row){
   }
 
 
-Matrix::Matrix(int column, int rows){
-  this->cantColumns =  column;
-  this->cantRows = rows;
-  int i;
-  matrix = (char **)malloc(cantRows*sizeof(char *));
-  for(i = 0; i < rows ; i++){
-    matrix[i]=(char*)malloc(cantColumns*sizeof(char));
-  }
-}
+
 
 //muestra por stdout las dimensiones de la matrix
 void Matrix::dimesions(){
   std::cout << "Tengo col:" <<this->cantColumns<<"y fil:"<<this->cantRows<< std::endl;
+}
+
+
+void Matrix::print(){
+  for (int i = 0; i < this->cantRows; i++) {
+    for (int j = 0; j < this->cantColumns; j++) {
+      std::cout << matrix[i][j] << " ";
+    }
+    std::cout << "" << std::endl;
+  }
 }
 
 //verifica si la posicion fila,colum es valida
@@ -32,25 +55,30 @@ bool Matrix::positionIsValid(Position& position){
     rowPositionValid(position.getRow());
   }
   //-------------------------getters---------------------------------
-int Matrix::getCantColum(){
+int Matrix::getCantColumns() const {
   return cantColumns;
   }
 
-int Matrix::getCantRows(){
+int Matrix::getCantRows() const{
     return cantRows;
   }
 
-void Matrix::setElementPos(int posColumn, int posRows, const char* element){
-  matrix[posRows][posColumn] = *element;
+void Matrix::setElementPos(int posRows, int posColumn, std::string element){
+  matrix[posRows-1][posColumn-1] = element;
 }
 
-char Matrix::getElementPos(int posColumn, int posRows){
-  return matrix[posRows][posColumn];
+std::string Matrix::getElementPos(int posRows,int posColumn) const{
+  return matrix[posRows-1][posColumn-1];
 }
+
+std::string Matrix::getElementPos(Position position) const{
+  return matrix[position.getRow()-1][position.getColumn()-1];
+}
+
 
 Matrix::~Matrix(){
-  int i;
-  for(i = 0; i < cantRows ; i++){
+  std::cout << "destructor called" << std::endl;
+  for (int i = 0; i < cantRows; i++) {
     free(matrix[i]);
   }
   free(matrix);

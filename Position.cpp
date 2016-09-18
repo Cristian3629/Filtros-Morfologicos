@@ -12,7 +12,7 @@ Position::Position(int rowNew,int columNew){
   Position Position::relativityPosition(Position& otherPosition){
     int columnNew = otherPosition.getColumn() - this->column;
     int rowNew = otherPosition.getRow() - this->row;
-    Position newPosition(columnNew,rowNew);
+    Position newPosition(rowNew,columnNew);
     return newPosition;
   }
 
@@ -21,6 +21,18 @@ Position::Position(int rowNew,int columNew){
     int newRow = this->row + position.getRow();
     Position newPosition(newRow,newColumn);
     return newPosition;
+  }
+
+  void Position::setColumn(int columnNew){
+    this->column = columnNew;
+  }
+
+  void Position::print(){
+    std::cout << "("<< this->row << "," << this->column <<  ")" << std::endl;
+  }
+
+  void Position::setRow(int rowNew){
+    this->row = rowNew;
   }
 
   int Position::getColumn(){

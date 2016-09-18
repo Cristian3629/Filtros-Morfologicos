@@ -10,16 +10,19 @@ class Matrix{
 private:
 	bool columnPositionValid(int column);
 	bool rowPositionValid(int row);
-	int cantColumns, cantRows;
-	char** matrix; /*puntero a la matriz*/
+	int cantRows,cantColumns;
+	std::string** matrix; /*puntero a la matriz*/
 public:
-    Matrix(int colum, int rows);
-    int getCantColum();
-    int getCantRows();
-    char getElementPos(int posColumn, int posRows);
-		void setElementPos(int posColumn,int posRows, const char* element);
+    Matrix(int rows, int column);
+		Matrix(const Matrix& matrix);
+    int getCantColumns() const;
+    int getCantRows() const;
+    std::string getElementPos(int posColumn, int posRows) const;
+		std::string getElementPos(Position position) const;
+		void setElementPos(int posRows,int posColumn, std::string element);
 		bool positionIsValid(Position& position);
 		void dimesions();
+		void print();
 		~Matrix();
 };
 
