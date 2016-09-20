@@ -4,7 +4,7 @@
 #include "Position.h"
 #include <vector>
 #include <stdlib.h> // malloc,free
-
+#include <string>
 
 class Matrix{
 private:

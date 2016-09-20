@@ -1,5 +1,9 @@
 #include "Filter.h"
+#include <string>
+#include <list>
 
+using std::list;
+using std::string;
 //Constructor
 Filter::Filter(){}
 
@@ -10,14 +14,14 @@ Filter::~Filter(){}
 comparar
 Post:Devuelve una lista con todos los elementos que se compararon
 */
-std::list<bool> Filter::compareMatrices(Matrix& imagen,Matrix& patron,Position& position){
-  std::list<bool> lista;
+list<bool> Filter::compareMatrices(Matrix& imagen,Matrix& patron,Position& pos){
+  list<bool> lista;
   int row = patron.getCantRows();
   int column = patron.getCantColumns();
   Position posicionMedia(row/2 + 1, column/2 + 1);
-  Position posicionRelativa = posicionMedia.relativityPosition(position);
+  Position posicionRelativa = posicionMedia.relativityPosition(pos);
   Position otherPosition(0,0);
-  std::string asterisco("#");
+  string asterisco("#");
   bool valor;
   int i,j;
   for (i = 1; i <= row; i++) {
@@ -28,11 +32,10 @@ std::list<bool> Filter::compareMatrices(Matrix& imagen,Matrix& patron,Position& 
       //Posicion no valida
       if (imagen.positionIsValid(posImagen) == 0){
         lista.push_back(false);
-      }
-      else{
+      }else{
         //posicion valida
         if (asterisco.compare(patron.getElementPos(i,j)) == 0){
-          std::string elemento = imagen.getElementPos(posImagen);
+          string elemento = imagen.getElementPos(posImagen);
           valor =  elemento.compare(asterisco);
           if (valor == 0){
             lista.push_back(true);
@@ -67,7 +70,7 @@ Matrix Filter::aplicateFilter(Matrix& image,Matrix& patron){
     for (int j = 1; j <= column; j++){
       pivote.setRow(i);
       pivote.setColumn(j);
-      std::list<bool> lista = compareMatrices(image,patron,pivote);
+      list<bool> lista = compareMatrices(image,patron,pivote);
       bool valor = checkCoincidence(lista);
       if (valor){
         pepe.setElementPos(pivote.getRow(),pivote.getColumn(),"#");

@@ -1,7 +1,7 @@
 #ifndef EROSION_H_
 #define EROSION_H_
 #include "Filter.h"
-
+#include <list>
 
 class Erosion : public Filter{
 private:

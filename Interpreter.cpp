@@ -1,9 +1,12 @@
 #include "Interpreter.h"
-
+#include <string>
+#include <vector>
 //Esta se encarga de interpretar una cadena y devolver la matriz
 //saca el espacio redundante al principio pero no en el intermedio
-using namespace std;
-
+using std::string;
+using std::stoi;
+using std::vector;
+using std::stringstream;
 
 Interpreter::Interpreter(){
   //std::cout << "Soy una dilatacion" << std::endl;
@@ -18,16 +21,16 @@ Matrix Interpreter::createMatrix(const string& matrix){
   vector<string>::iterator it;
   string::size_type sz;
   it = elems.begin();
-  int row = std::stoi(*it,&sz);
+  int row = stoi(*it,&sz);
   ++it;
-  int colum = std::stoi(*it,&sz);
+  int colum = stoi(*it,&sz);
   Matrix patron(row,colum);
   //std::cout <<row<<","<<colum<<std::endl;
   int i = 0;
   ++it;
   for (; it!=elems.end() ; ++it) {
     string fila = *it;
-    for (int j = 0; j < colum;j++) {
+    for (int j = 0 ; j < colum ; j++) {
       string elemento = fila.substr(j,1);
       //std::cout << "Elemento:" <<elemento<< std::endl;
       patron.setElementPos(i+1,j+1,elemento);
@@ -50,7 +53,7 @@ Matrix Interpreter::createMatrix(std::vector<string> elems){
   ++it;
   for (; it!=elems.end() ; ++it) {
     string fila = *it;
-    for (int j = 0; j < colum;j++) {
+    for (int j = 0 ; j < colum ; j++) {
       string elemento = fila.substr(j,1);
       //std::cout << "Elemento:" <<elemento<< std::endl;
       patron.setElementPos(i+1,j+1,elemento);

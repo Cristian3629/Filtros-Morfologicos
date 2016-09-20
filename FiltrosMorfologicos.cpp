@@ -1,17 +1,21 @@
 #include <iostream> //cout
 #include <string> //compare
 #include <string.h> //compare
-#include <list>  //list
+#include <vector>  //vector
 #include "Position.h"
 #include "Matrix.h"
 #include "Interpreter.h"
 #include "Dilatation.h"
 #include "Erosion.h"
 
-using namespace std;
+using std::string;
+using std::cout;
+using std::endl;
+using std::cin;
+using std::vector;
 
-Filter* identifierFilter(std::string& filterString){
-  std::string dilatationString("d");
+Filter* identifierFilter(string& filterString){
+  string dilatationString("d");
   if (!filterString.compare(dilatationString)){
     Dilatation* dilatation = new Dilatation();
     return dilatation;
@@ -22,7 +26,7 @@ Filter* identifierFilter(std::string& filterString){
 
 Matrix getMatrix(char* matrix){
   Interpreter interpreter;
-  std::string matrixString(matrix);
+  string matrixString(matrix);
   Matrix oneMatrix = interpreter.createMatrix(matrixString);
   return oneMatrix;
 }
@@ -32,14 +36,13 @@ int main(int argc, char *argv[]) {
   Interpreter interpreter;
   int cantThreads = atoi(argv[1]);
   vector<string> vectorImagen;
-  std::cout << "Cantidad de hilos:" << cantThreads << std::endl;
+  cout << "Cantidad de hilos:" << cantThreads << endl;
   string input_line;
   if (argc < 2){
-    std::cout << "Falta argumentos" << std::endl;
+    cout << "Falta argumentos" << endl;
     return 1;
   }
-
-  if(cin){
+  if (cin) {
     getline(cin, input_line);
     size_t pos = input_line.find(" ");
     //cout << pos << endl;
@@ -48,7 +51,7 @@ int main(int argc, char *argv[]) {
     vectorImagen.push_back(row);
     vectorImagen.push_back(col);
   }
-  while(cin){
+  while (cin){
     getline(cin, input_line);
     if (input_line.compare("\n") == 1){
       //std::cout << input_line << std::endl;
@@ -59,11 +62,11 @@ int main(int argc, char *argv[]) {
   Matrix& image(matrixOrigin);
   image.print();
   for (int i = 2; i <= argc-2; i++) {
-    std::string filterString(argv[i]);
+    string filterString(argv[i]);
     Filter* filter = identifierFilter(filterString);
-    std::string matrixString(argv[i+1]);
+    string matrixString(argv[i+1]);
     Matrix patron = interpreter.createMatrix(matrixString);
-    //std::cout << "patron" << std::endl;
+    //std::cout << "patron" << endl;
     //patron.print();
     Matrix resultado = filter->aplicateFilter(image,patron);
     image.set(resultado);

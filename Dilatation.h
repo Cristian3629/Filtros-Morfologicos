@@ -1,7 +1,7 @@
 #ifndef DILATATION_H_
 #define DILATATION_H_
 #include "Filter.h"
-
+#include <list>
 
 class Dilatation : public Filter{
 private:

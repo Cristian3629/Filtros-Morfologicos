@@ -8,7 +8,7 @@
 
 class Filter{
 private:
-  std::list<bool> compareMatrices(Matrix& imagen,Matrix& patron,Position& position);
+  std::list<bool> compareMatrices(Matrix& imagen,Matrix& patron,Position& pos);
   virtual bool checkCoincidence(std::list<bool> lista) = 0;
   Matrix createImageDestin(int row,int column);
 public:
