@@ -41,7 +41,7 @@ void Matrix::dimesions(){
 void Matrix::print(){
   for (int i = 0; i < this->cantRows; i++) {
     for (int j = 0; j < this->cantColumns; j++) {
-      std::cout << matrix[i][j] << " ";
+      std::cout << matrix[i][j] << "";
     }
     std::cout << "" << std::endl;
   }
@@ -75,7 +75,7 @@ std::string Matrix::getElementPos(Position position) const{
 
 
 Matrix::~Matrix(){
-  std::cout << "destructor called" << std::endl;
+  //std::cout << "destructor called" << std::endl;
   for (int i = 0; i < cantRows; i++) {
     delete[] matrix[i];
   }

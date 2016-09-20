@@ -6,26 +6,23 @@ using namespace std;
 
 
 Interpreter::Interpreter(){
-  std::cout << "Soy una dilatacion" << std::endl;
+  //std::cout << "Soy una dilatacion" << std::endl;
 }
 
 Interpreter::~Interpreter(){}
 
 Matrix Interpreter::createMatrix(const string& matrix){
-  std::cout << "createMatrix" << std::endl;
+  //std::cout << "createMatrix" << std::endl;
   vector<string> elems;
   split(matrix,' ', elems);
   vector<string>::iterator it;
-  for(it = elems.begin() ; it != elems.end(); ++it){
-    cout << *it << endl;
-  }
-  std::string::size_type sz;
+  string::size_type sz;
   it = elems.begin();
   int row = std::stoi(*it,&sz);
   ++it;
   int colum = std::stoi(*it,&sz);
-  Matrix patron(3,3);
-  std::cout <<row<<","<<colum<<std::endl;
+  Matrix patron(row,colum);
+  //std::cout <<row<<","<<colum<<std::endl;
   int i = 0;
   ++it;
   for (; it!=elems.end() ; ++it) {
@@ -47,7 +44,7 @@ Matrix Interpreter::createMatrix(std::vector<string> elems){
   int row = std::stoi(*it,&sz);
   ++it;
   int colum = std::stoi(*it,&sz);
-  Matrix patron(3,3);
+  Matrix patron(row,colum);
   std::cout <<row<<","<<colum<<std::endl;
   int i = 0;
   ++it;
