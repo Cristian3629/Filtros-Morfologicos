@@ -2,7 +2,7 @@
 
 
 Erosion::Erosion(){
-  std::cout << "Soy una erosion" << std::endl;
+  //std::cout << "Soy una erosion" << std::endl;
 }
 
 Erosion::~Erosion(){}

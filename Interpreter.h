@@ -11,10 +11,10 @@
 class Interpreter{
 private:
 	void split(const std::string &s, char delim, std::vector<std::string> &elems);
-	void cargarMatrizPatron(Matrix& patron);
 public:
 	Interpreter();
 	Matrix createMatrix(const std::string& matrix);
+	Matrix createMatrix(std::vector<std::string> elems);
 	~Interpreter();
 };
 #endif /* INTERPRETER_H_ */

@@ -32,7 +32,7 @@ Matrix Interpreter::createMatrix(const string& matrix){
     string fila = *it;
     for (int j = 0; j < colum;j++) {
       string elemento = fila.substr(j,1);
-      std::cout << "Elemento:" <<elemento<< std::endl;
+      //std::cout << "Elemento:" <<elemento<< std::endl;
       patron.setElementPos(i+1,j+1,elemento);
     }
     i++;
@@ -40,24 +40,27 @@ Matrix Interpreter::createMatrix(const string& matrix){
   return patron;
 }
 
-void Interpreter::cargarMatrizPatron(Matrix& patron){
-  std::cout << "Interpreter::cargarMatrizPatron" << std::endl;
-  int row = patron.getCantRows();
-  int column = patron.getCantColumns();
-  std::cout << "entrando al for" << std::endl;
-  for (int i = 1; i <= row; i++) {
-    for (int j = 1; j <= column; j++) {
-      std::cout <<i<< "," <<j<< std::endl;
-      patron.setElementPos(i,j,"#");
+Matrix Interpreter::createMatrix(std::vector<string> elems){
+  std::cout << "createMatrix from vector" << std::endl;
+  std::string::size_type sz;
+  vector<string>::iterator it = elems.begin();
+  int row = std::stoi(*it,&sz);
+  ++it;
+  int colum = std::stoi(*it,&sz);
+  Matrix patron(3,3);
+  std::cout <<row<<","<<colum<<std::endl;
+  int i = 0;
+  ++it;
+  for (; it!=elems.end() ; ++it) {
+    string fila = *it;
+    for (int j = 0; j < colum;j++) {
+      string elemento = fila.substr(j,1);
+      //std::cout << "Elemento:" <<elemento<< std::endl;
+      patron.setElementPos(i+1,j+1,elemento);
     }
+    i++;
   }
-  std::cout << "salir del for" << std::endl;
-  patron.setElementPos(1,1,".");
-  patron.setElementPos(1,3,".");
-  patron.setElementPos(3,1,".");
-  patron.setElementPos(3,3,".");
-  std::cout << "Matrix patron" << std::endl;
-  patron.print();
+  return patron;
 }
 
 void Interpreter::split(const string &s, char delim, vector<string> &elems) {

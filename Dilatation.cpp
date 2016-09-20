@@ -2,7 +2,7 @@
 
 
 Dilatation::Dilatation(){
-  std::cout << "Soy una dilatacion" << std::endl;
+  //std::cout << "Soy una dilatacion" << std::endl;
 }
 
 Dilatation::~Dilatation(){}

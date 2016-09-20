@@ -8,6 +8,8 @@
 #include "Dilatation.h"
 #include "Erosion.h"
 
+using namespace std;
+
 Filter identifierFilter(std::string& filterString){
   std::string dilatationString("d");
   if (!filterString.compare(dilatationString)){
@@ -67,26 +69,6 @@ void cargarMatrizImage(Matrix& image){
 //   return pepe;
 // }
 
-void cargarMatrizPatron(Matrix& patron){
-  int row = patron.getCantRows();
-  int column = patron.getCantColumns();
-  std::cout << "entrando al for" << std::endl;
-  for (int i = 1; i <= row; i++) {
-    for (int j = 1; j <= column; j++) {
-      std::cout <<i<< "," <<j<< std::endl;
-      patron.setElementPos(i,j,"#");
-    }
-  }
-  std::cout << "salir del for" << std::endl;
-  patron.setElementPos(1,1,".");
-  patron.setElementPos(1,3,".");
-  patron.setElementPos(3,1,".");
-  patron.setElementPos(3,3,".");
-  std::cout << "Matrix patron" << std::endl;
-  patron.print();
-}
-
-
 void cargarMatrixDestino(Matrix& destino){
   int row = destino.getCantRows();
   int column = destino.getCantColumns();
@@ -101,37 +83,45 @@ void cargarMatrixDestino(Matrix& destino){
 
 Filter getFilter(char* filter){
   std::string filterString(filter);
-  Filter filter = identifierFilter(filterString);
-  return filter;
+  Filter one_filter = identifierFilter(filterString);
+  return one_filter;
 }
 
 Matrix getMatrix(char* matrix){
-  std::string matrixString(argv[i+1]);
+  Interpreter interpreter;
+  std::string matrixString(matrix);
   Matrix oneMatrix = interpreter.createMatrix(matrixString);
-  return matrix;
+  return oneMatrix;
 }
 //    0      1              2           3         4          5
 // ./tp <numero de hilos> <filtro 1> <patron 1> <filtro 2> <patron 2>  ...
 int main(int argc, char *argv[]) {
+  Interpreter interpreter;
+  int cantThreads = atoi(argv[1]);
+  vector<string> vectorImagen;
+  std::cout << "Cantidad de hilos:" << cantThreads << std::endl;
+  string input_line;
   if (argc < 2){
     std::cout << "Falta argumentos" << std::endl;
     return 1;
   }
 
-  string input_line;
+  if(cin){
+    getline(cin, input_line);
+    size_t pos = input_line.find(" ");
+    //cout << pos << endl;
+    cout << input_line.substr(0,pos) << endl;
+    cout << input_line.substr(pos+1) << endl;
+  }
   while(cin){
     getline(cin, input_line);
     if (input_line.compare("\n") == 1){
-      //std::cout << "proces_string():"<< input_line<<std::endl;
-      std::cout << input_line << std::endl;;
+      std::cout << input_line << std::endl;
+      vectorImagen.push_back(input_line);
       }
   }
-  Interpreter interpreter;
-  int cantThreads = atoi(argv[1]);
-  std::cout<< "Cantidad de hilos:"<< cantThreads << std::endl;
+  //Matrix image = interpreter.createMatrix(vectorImagen);
   for (int i = 2; i <= argc-2; i++) {
-    //std::cout << "/* ----- */" << std::endl;
-    //std::cout << argv[i] << std::endl;
     std::string filterString(argv[i]);
     Filter filter = identifierFilter(filterString);
     std::string matrixString(argv[i+1]);
