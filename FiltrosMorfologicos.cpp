@@ -24,19 +24,13 @@ Filter* identifierFilter(string& filterString){
   return erosion;
 }
 
-Matrix getMatrix(char* matrix){
-  Interpreter interpreter;
-  string matrixString(matrix);
-  Matrix oneMatrix = interpreter.createMatrix(matrixString);
-  return oneMatrix;
-}
 //    0      1              2           3         4          5
 // ./tp <numero de hilos> <filtro 1> <patron 1> <filtro 2> <patron 2>  ...
 int main(int argc, char *argv[]) {
   Interpreter interpreter;
-  int cantThreads = atoi(argv[1]);
+  //int cantThreads = atoi(argv[1]);
   vector<string> vectorImagen;
-  cout << "Cantidad de hilos:" << cantThreads << endl;
+  //cout << "Cantidad de hilos:" << cantThreads << endl;
   string input_line;
   if (argc < 2){
     cout << "Falta argumentos" << endl;
@@ -60,7 +54,7 @@ int main(int argc, char *argv[]) {
   }
   Matrix matrixOrigin = interpreter.createMatrix(vectorImagen);
   Matrix& image(matrixOrigin);
-  image.print();
+  //image.print();
   for (int i = 2; i <= argc-2; i++) {
     string filterString(argv[i]);
     Filter* filter = identifierFilter(filterString);
@@ -70,9 +64,10 @@ int main(int argc, char *argv[]) {
     //patron.print();
     Matrix resultado = filter->aplicateFilter(image,patron);
     image.set(resultado);
-    image.print();
+    //image.print();
     i++;
   }
+  std::cout <<image.getCantColumns()<<" "<<image.getCantRows()<< std::endl;
   image.print();
   return 0;
 }

@@ -1,0 +1,110 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{vmargin}
+\setpapersize{A4}
+\setmargins
+{2.5cm}       % margen izquierdo
+{1.5cm} % margen superior
+{16.5cm}% anchura del texto
+{23.42cm} % altura del texto
+{10pt} % altura de los encabezados
+{1cm} % espacio entre el texto y los encabezados
+{0pt} % altura del pie de página
+{2cm}% espacio entre el texto y el pie de página
+
+\begin{document}
+	
+	\begin{titlepage}
+		\centering
+		{\scshape\LARGE Universidad de Buenos Aires \par}
+		\vspace{1cm}
+		{\scshape\Large Taller de Programación (75.42)\par}
+		\vspace{1.5cm}
+		{\huge\bfseries Filtro Morfológicos \par}
+		\vspace{2cm}
+		{\Large\itshape Cristian González\par}
+		\vspace{2cm}
+		{\Large\itshape 94719 \par}
+	\end{titlepage}
+	
+	
+	
+	
+	
+	
+	%Índice.
+	\tableofcontents
+	\newpage
+\section{Clases}
+\subsection{Interpreter}
+La responsabilidad de esta clases es dado en un string que dentro tiene el formato de una matriz, poder interpretarlo y crear una matrix con el formato indicado.
+
+\subsection{Filter}
+Es una clase abstracta que se encarga de dado una matrix imagen y una matrix patrón encargarse de constatar una matrix con la otra, tiene el compartimiento general de los filtros del trabajo práctico.
+
+\subsection{Erosion}
+Modela el comportamiento del Filtro Erosion que busca la coincidencias totales para emitir en la matrix destino.
+\subsection{Dilatation}
+Se encarga de modelar el comportamiento del Filtro Dilatación y de tal manera buscar coincidencia parciales para luego emitir en la matrix destino.
+
+\subsection{Matrix}
+
+Es el repositorio de la "imagenes" tanto el de origen, patrón y destino, básicamente es una matrix que contiene strings.
+
+\subsection{Position}
+
+Simplemente modela las coordenada de una matrix (fil,col) y realiza operaciones básica como suma de posiciones como también obtener la posición relativa.
+
+\subsection{Thread}
+Se encarga de de modelar el comporamiento de un thread, para crearlo se tiene que proveer los datos que va a necesitar ese thread como la función/método a ejecutar.
+
+
+\subsection{FiltrosMorfologicos}
+Clase punto de entraga al sistema, se encarga de procesar lo que se ingresa por STDIN, como controlar la cantidad de hilos y aplicar de forma secuencial los filtros que correspondan.
+
+\newpage
+\section{Diagramas}
+Acá se muestra como se relaciona el filtro con las otras clases, el Filter utiliza a la Matrix para poder conocer sus dimensiones, poder crear Matrix vacía, como poder obtener elemento de cierta Position.\\
+Tanto como Dilatation como Erosion definen el método 
+\texttt{checkCoincidence()} ya que cada filtro busca distintas coincidencias, esto es conocido como el patrón \underline{Template Method}.\\
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1.0\linewidth]{Filtro}
+\label{fig:Filtro}
+\end{figure}
+
+\newpage
+La clase principal interactúa con 3 clases:Filter,Interpreter y Matrix. Con Interpreter se encarga de identificar qué clase de Filter a aplicar y crea un instancia de la misma, para luego aplicar un filtro a la Matrix ingresada por STDIN junto con el patrón devuelto por Interpreter. A Matrix lo utiliza para poder crear una instancia que se copiar a partir de otra y poder setear todos los valores de una Matrix a partir de una instancia que se le pasa.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\linewidth]{FiltroFormologicoPrincipal}
+\label{fig:FiltroFormologicoPrincipal}
+\end{figure}
+
+
+\section{Dificultades}
+\begin{enumerate}
+	\item Al crear un Matrix utiliza \texttt{malloc()} para poder reservar memoria, eso generaba \texttt{jump conditional} que si bien es memoria reservada, puede tener basura.
+	\item Al utilizar el patrón Template Method, la idea inicial era poder simplemente conocer un Filter y aplicar el filtro, pero para eso tuve que recurrir al \texttt{new}, ya que sí o sí necesito un puntero para que llame al método definido en la clase base.
+	\end{enumerate}
+	
+\section{Cambios}
+\begin{itemize}
+	\item En Matrix hay un método set, este en realidad debería ser una sobrecarga del \texttt{operator \textbf{=}} siendo un \texttt{asignación por movimiento}.
+	\item El método \texttt{createMatrix()} debería ser un \texttt{constructor por movimiento}.
+	\item El método \texttt{aplicateFilter()} debería ser un \texttt{constructor por movimiento}.
+	\item Para los \texttt{Threads} la idea es crear un container que tenga los datos necesarios para \texttt{Threads}, y que sea accesible por \texttt{Singleton}.
+\end{itemize}
+
+\section{Links}
+Link del repositorio:https://github.com/Cristian3629/Filtros-Morfologicos
+
+\end{document}

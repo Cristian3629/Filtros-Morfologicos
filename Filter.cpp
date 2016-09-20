@@ -49,7 +49,6 @@ list<bool> Filter::compareMatrices(Matrix& imagen,Matrix& patron,Position& pos){
     return lista;
   }
 
-
 Matrix Filter::createImageDestin(int row,int column){
   Matrix destino(row,column);
   for (int i = 1; i <= row; i++) {

@@ -41,14 +41,14 @@ Matrix Interpreter::createMatrix(const string& matrix){
 }
 
 Matrix Interpreter::createMatrix(std::vector<string> elems){
-  std::cout << "createMatrix from vector" << std::endl;
+  //std::cout << "createMatrix from vector" << std::endl;
   std::string::size_type sz;
   vector<string>::iterator it = elems.begin();
   int row = std::stoi(*it,&sz);
   ++it;
   int colum = std::stoi(*it,&sz);
   Matrix patron(row,colum);
-  std::cout <<row<<","<<colum<<std::endl;
+  //std::cout <<row<<","<<colum<<std::endl;
   int i = 0;
   ++it;
   for (; it!=elems.end() ; ++it) {

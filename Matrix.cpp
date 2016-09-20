@@ -14,7 +14,7 @@ Matrix::Matrix(int rows, int column):cantRows(rows),cantColumns(column){
 
 Matrix::Matrix(const Matrix& otherMatrix):cantRows(otherMatrix.getCantRows()),
 cantColumns(otherMatrix.getCantColumns()){
-  cout << "asignation per copy" << endl;
+  //cout << "asignation per copy" << endl;
   this->matrix = new string*[cantRows];
   for (int i = 0; i < cantRows ; i++){
     this->matrix[i]= new string[cantColumns];
@@ -64,7 +64,7 @@ void Matrix::print(){
     }
     cout << "" << endl;
   }
-  cout << "++++++++++++++" << endl;
+  //cout << "++++++++++++++" << endl;
 }
 
 //verifica si la posicion fila,colum es valida
