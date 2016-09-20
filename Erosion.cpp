@@ -2,7 +2,7 @@
 
 
 Erosion::Erosion(){
-  //std::cout << "Soy una erosion" << std::endl;
+  std::cout << "Soy una erosion" << std::endl;
 }
 
 Erosion::~Erosion(){}
@@ -12,12 +12,15 @@ Erosion::~Erosion(){}
 //Pre:Recibe un list de valores booleanos
 //Post: Chequea si existe coincidencia total
 bool Erosion::checkCoincidence(std::list<bool> lista){
+  std::cout << "checkCoincidence erosion" << std::endl;
   std::list<bool>::iterator it;
   for (it=lista.begin(); it != lista.end(); ++it){
     bool valor = *it;
+    std::cout << valor << " ";
     if (!valor){
       return false;
     }
   }
+  std::cout << ""<< std::endl;
   return true;
 }

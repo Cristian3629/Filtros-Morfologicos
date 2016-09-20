@@ -40,11 +40,6 @@ std::list<bool> Filter::compareMatrices(Matrix& imagen,Matrix& patron,Position& 
   }
 
 
-
-bool Filter::checkCoincidence(std::list<bool> lista){
-  return true;
-}
-
 Matrix Filter::createImageDestin(int row,int column){
   Matrix destino(row,column);
   for (int i = 1; i <= row; i++) {
@@ -72,6 +67,6 @@ Matrix Filter::aplicateFilter(Matrix& image,Matrix& patron){
       }
     }
   }
-  std::cout << "------------------------" << std::endl;
+  //std::cout << "------------------------" << std::endl;
   return pepe;
 }

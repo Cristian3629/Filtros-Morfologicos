@@ -5,7 +5,6 @@
 
 class Erosion : public Filter{
 private:
-  std::list<bool> compareMatrices(Matrix& imagen,Matrix& patron,Position& position);
   bool checkCoincidence(std::list<bool> lista);
 public:
   Erosion();
