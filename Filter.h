@@ -11,6 +11,7 @@ class Filter{
 private:
   std::list<bool> compareMatrices(Matrix& imagen,Matrix& patron,Position& position);
   virtual bool checkCoincidence(std::list<bool> lista);
+  Matrix createImageDestin(int row,int column);
 public:
     Filter();
     Matrix aplicateFilter(Matrix& image,Matrix& patron);

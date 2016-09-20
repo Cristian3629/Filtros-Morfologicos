@@ -1,50 +1,22 @@
 #include <iostream> //cout
 #include <string> //compare
+#include <string.h> //compare
 #include <list>  //list
 #include "Position.h"
 #include "Matrix.h"
 #include "Interpreter.h"
 #include "Dilatation.h"
-#include "Filter.h"
+#include "Erosion.h"
 
-//posicion es la posicion donde coloco el patron
-//tengo que cambiar el nombre del metodo
-// std::list<bool> posicionesValida(Matrix& imagen,Matrix& patron, Position& posicion){
-//   std::cout << "---posicionesValida, la posicion es:--------------" << std::endl;
-//   posicion.print();
-//   std::list<bool> lista;
-//   //bool fit = true; // se procesa con AND
-//   //bool intersect = false; //se proceso con for
-//   int row = patron.getCantRows();
-//   int column = patron.getCantColumns();
-//   Position posicionMedia(row/2 + 1, column/2 + 1);
-//   Position posicionRelativa = posicionMedia.relativityPosition(posicion);
-//   Position otherPosition(0,0);
-//   std::string asterisco("#");
-//   bool valor;
-//   int i,j;
-//   for (i = 1; i <= row; i++) {
-//     for (j = 1; j <= column; j++) {
-//       otherPosition.setRow(i);
-//       otherPosition.setColumn(j);
-//       Position posImagen = posicionRelativa.sum(otherPosition);
-//       if (imagen.positionIsValid(posImagen) == 1 &&  asterisco.compare(patron.getElementPos(i,j)) == 0){
-//         std::string elemento = imagen.getElementPos(posImagen);
-//         //si el elemento de la matrix es un asterico
-//         valor =  elemento.compare(asterisco);
-//         if (valor == 0){
-//           lista.push_back(true);
-//         }else{
-//           lista.push_back(false);
-//         }
-//
-//         }
-//       }
-//     }
-//     return lista;
-//   }
-
-
+Filter identifierFilter(std::string& filterString){
+  std::string dilatationString("d");
+  if (!filterString.compare(dilatationString)){
+    Dilatation dilatation;
+    return dilatation;
+  }
+  Erosion erosion;
+  return erosion;
+}
 
 void cargarMatrizImage(Matrix& image){
   int row = image.getCantRows();
@@ -114,15 +86,69 @@ void cargarMatrizPatron(Matrix& patron){
   patron.print();
 }
 
+
+void cargarMatrixDestino(Matrix& destino){
+  int row = destino.getCantRows();
+  int column = destino.getCantColumns();
+  std::cout << "entrando al for" << std::endl;
+  for (int i = 1; i <= row; i++) {
+    for (int j = 1; j <= column; j++) {
+      std::cout <<i<< "," <<j<< std::endl;
+      destino.setElementPos(i,j,".");
+    }
+  }
+}
+
+Filter getFilter(char* filter){
+  std::string filterString(filter);
+  Filter filter = identifierFilter(filterString);
+  return filter;
+}
+
+Matrix getMatrix(char* matrix){
+  std::string matrixString(argv[i+1]);
+  Matrix oneMatrix = interpreter.createMatrix(matrixString);
+  return matrix;
+}
 //    0      1              2           3         4          5
 // ./tp <numero de hilos> <filtro 1> <patron 1> <filtro 2> <patron 2>  ...
 int main(int argc, char *argv[]) {
-  Matrix patron(3,3); //imagen patron
-  Matrix imagen(6,6);
-  cargarMatrizPatron(patron);
-  cargarMatrizImage(imagen);
-  Dilatation dilatacion;
-  Matrix other = dilatacion.aplicateFilter(imagen,patron);
-  other.print();
+  if (argc < 2){
+    std::cout << "Falta argumentos" << std::endl;
+    return 1;
+  }
+
+  string input_line;
+  while(cin){
+    getline(cin, input_line);
+    if (input_line.compare("\n") == 1){
+      //std::cout << "proces_string():"<< input_line<<std::endl;
+      std::cout << input_line << std::endl;;
+      }
+  }
+  Interpreter interpreter;
+  int cantThreads = atoi(argv[1]);
+  std::cout<< "Cantidad de hilos:"<< cantThreads << std::endl;
+  for (int i = 2; i <= argc-2; i++) {
+    //std::cout << "/* ----- */" << std::endl;
+    //std::cout << argv[i] << std::endl;
+    std::string filterString(argv[i]);
+    Filter filter = identifierFilter(filterString);
+    std::string matrixString(argv[i+1]);
+    Matrix patron = interpreter.createMatrix(matrixString);
+    std::cout << "asasa" << std::endl;
+    //patron.print();
+    i++;
+    //std::cout << "/* ----- */" << std::endl;
+  }
+  //patron.print();
+  //Matrix patron(3,3); //imagen patron
+  // Matrix imagen(6,6);
+  //cargarMatrizPatron(patron);
+  // cargarMatrizImage(imagen);
+  // Dilatation dilatacion;
+  // Matrix other = dilatacion.aplicateFilter(imagen,patron);
+  // other.print();
+  //Interpreter::createMatrix();
   return 0;
 }

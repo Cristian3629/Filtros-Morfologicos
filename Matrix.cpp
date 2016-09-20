@@ -1,19 +1,20 @@
 #include "Matrix.h"
 
+using namespace std;
 Matrix::Matrix(int rows, int column):cantRows(rows),cantColumns(column){
-  matrix = (std::string **)malloc(cantRows*sizeof(std::string*));
+  this->matrix = new string*[cantRows];
   for(int i = 0; i < rows ; i++){
-    matrix[i]=(std::string*)malloc(cantColumns*sizeof(std::string));
+    this->matrix[i]= new string[cantColumns];
   }
 }
 
 Matrix::Matrix(const Matrix& otherMatrix):cantRows(otherMatrix.getCantRows()),cantColumns(otherMatrix.getCantColumns()){
-  std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
-  this->matrix = (std::string**)malloc(this->cantRows*sizeof(std::string*));
-  int i,j;
-  for(i = 0; i < this->cantRows ; i++){
-    matrix[i]=(std::string*)malloc(cantColumns*sizeof(std::string));
+  std::cout << "asignation per copy" << std::endl;
+  this->matrix = new string*[cantRows];
+  for(int i = 0; i < cantRows ; i++){
+    this->matrix[i]= new string[cantColumns];
   }
+  int i,j;
   for (i = 1; i <= cantRows; i++) {
     for (j = 1; j <= cantColumns; j++) {
       this->setElementPos(i,j,otherMatrix.getElementPos(i,j));
@@ -30,9 +31,6 @@ bool Matrix::columnPositionValid(int column){
 bool Matrix::rowPositionValid(int row){
     return 0 < row && row <= this->cantRows;
   }
-
-
-
 
 //muestra por stdout las dimensiones de la matrix
 void Matrix::dimesions(){
@@ -79,7 +77,7 @@ std::string Matrix::getElementPos(Position position) const{
 Matrix::~Matrix(){
   std::cout << "destructor called" << std::endl;
   for (int i = 0; i < cantRows; i++) {
-    free(matrix[i]);
+    delete[] matrix[i];
   }
-  free(matrix);
+  delete[](matrix);
 }

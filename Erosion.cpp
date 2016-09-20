@@ -1,7 +1,9 @@
 #include "Erosion.h"
 
 
-Erosion::Erosion(){}
+Erosion::Erosion(){
+  std::cout << "Soy una erosion" << std::endl;
+}
 
 Erosion::~Erosion(){}
 

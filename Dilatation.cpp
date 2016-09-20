@@ -1,7 +1,9 @@
 #include "Dilatation.h"
 
 
-Dilatation::Dilatation(){}
+Dilatation::Dilatation(){
+  std::cout << "Soy una dilatacion" << std::endl;
+}
 
 Dilatation::~Dilatation(){}
 
