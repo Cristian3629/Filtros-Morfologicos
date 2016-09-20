@@ -21,6 +21,7 @@ public:
 		std::string getElementPos(Position position) const;
 		void setElementPos(int posRows,int posColumn, std::string element);
 		bool positionIsValid(Position& position);
+		void set(const Matrix& otherMatrix);
 		void dimesions();
 		void print();
 		~Matrix();

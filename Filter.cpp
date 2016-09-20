@@ -25,13 +25,20 @@ std::list<bool> Filter::compareMatrices(Matrix& imagen,Matrix& patron,Position& 
       otherPosition.setRow(i);
       otherPosition.setColumn(j);
       Position posImagen = posicionRelativa.sum(otherPosition);
-      if (imagen.positionIsValid(posImagen) == 1 &&  asterisco.compare(patron.getElementPos(i,j)) == 0){
-        std::string elemento = imagen.getElementPos(posImagen);
-        valor =  elemento.compare(asterisco);
-        if (valor == 0){
-          lista.push_back(true);
-        }else{
-          lista.push_back(false);
+      //Posicion no valida
+      if (imagen.positionIsValid(posImagen) == 0){
+        lista.push_back(false);
+      }
+      else{
+        //posicion valida
+        if (asterisco.compare(patron.getElementPos(i,j)) == 0){
+          std::string elemento = imagen.getElementPos(posImagen);
+          valor =  elemento.compare(asterisco);
+          if (valor == 0){
+            lista.push_back(true);
+          }else{
+            lista.push_back(false);
+          }
         }
       }
     }

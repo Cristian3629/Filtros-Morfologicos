@@ -20,21 +20,6 @@ Filter* identifierFilter(std::string& filterString){
   return erosion;
 }
 
-void cargarMatrizImage(Matrix& image){
-  int row = image.getCantRows();
-  int column = image.getCantColumns();
-  for (int i = 1; i <= row; i++) {
-    for (int j = 1; j <= column; j++) {
-      image.setElementPos(i,j,".");
-    }
-  }
-  image.setElementPos(2,2,"#");
-  image.setElementPos(5,4,"#");
-  std::cout << "Matriz imagen" << std::endl;
-  image.print();
-}
-
-
 Matrix getMatrix(char* matrix){
   Interpreter interpreter;
   std::string matrixString(matrix);
@@ -71,19 +56,20 @@ int main(int argc, char *argv[]) {
       }
   }
   Matrix matrixOrigin = interpreter.createMatrix(vectorImagen);
-  Matrix& image = matrixOrigin;
+  Matrix& image(matrixOrigin);
   image.print();
   for (int i = 2; i <= argc-2; i++) {
     std::string filterString(argv[i]);
     Filter* filter = identifierFilter(filterString);
     std::string matrixString(argv[i+1]);
     Matrix patron = interpreter.createMatrix(matrixString);
+    //std::cout << "patron" << std::endl;
+    //patron.print();
     Matrix resultado = filter->aplicateFilter(image,patron);
-    resultado.print();
+    image.set(resultado);
+    image.print();
     i++;
-    //std::cout << "/* ----- */" << std::endl;
   }
-
   image.print();
   return 0;
 }

@@ -22,6 +22,19 @@ Matrix::Matrix(const Matrix& otherMatrix):cantRows(otherMatrix.getCantRows()),ca
   }
 }
 
+
+void Matrix::set(const Matrix& otherMatrix){
+  if (otherMatrix.getCantColumns() == this->cantColumns && otherMatrix.getCantRows() == this->cantRows){
+    for (int i = 1; i <= cantRows; i++){
+      for (int j = 1; j <= cantColumns; j++) {
+        this->setElementPos(i,j,otherMatrix.getElementPos(i,j));
+      }
+    }
+  }else{
+    std::cout << "no se puede copiar los valores" << std::endl;
+  }
+}
+
 //verifica si el num de columna es valido
 bool Matrix::columnPositionValid(int column){
     return 0 < column && column <= this->cantColumns;
@@ -45,6 +58,7 @@ void Matrix::print(){
     }
     std::cout << "" << std::endl;
   }
+  std::cout << "++++++++++++++" << std::endl;
 }
 
 //verifica si la posicion fila,colum es valida
