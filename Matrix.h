@@ -13,15 +13,19 @@ private:
 	int cantRows,cantColumns;
 	std::string** matrix; /*puntero a la matriz*/
 public:
+		//no copiable
+		Matrix(const Matrix &other) = delete;
+		Matrix& operator=(const Matrix &other) = delete;
+		Matrix(Matrix&& matrix); //constructor por movimiento
+		Matrix& operator=(Matrix&& other); //asignacion por movimiento
     Matrix(int rows, int column);
-		Matrix(const Matrix& matrix);
+		Matrix();
     int getCantColumns() const;
     int getCantRows() const;
     std::string getElementPos(int posColumn, int posRows) const;
 		std::string getElementPos(Position position) const;
 		void setElementPos(int posRows,int posColumn, std::string element);
 		bool positionIsValid(Position& position);
-		void set(const Matrix& otherMatrix);
 		void dimesions();
 		void print();
 		~Matrix();

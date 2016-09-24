@@ -14,13 +14,13 @@ using std::endl;
 using std::cin;
 using std::vector;
 
-Filter* identifierFilter(string& filterString){
+Filter* identifierFilter(string& filterString, int cantThreads){
   string dilatationString("d");
   if (!filterString.compare(dilatationString)){
-    Dilatation* dilatation = new Dilatation();
+    Dilatation* dilatation = new Dilatation(cantThreads);
     return dilatation;
   }
-  Erosion* erosion = new Erosion();
+  Erosion* erosion = new Erosion(cantThreads);
   return erosion;
 }
 
@@ -28,7 +28,7 @@ Filter* identifierFilter(string& filterString){
 // ./tp <numero de hilos> <filtro 1> <patron 1> <filtro 2> <patron 2>  ...
 int main(int argc, char *argv[]) {
   Interpreter interpreter;
-  //int cantThreads = atoi(argv[1]);
+  int cantThreads = atoi(argv[1]);
   vector<string> vectorImagen;
   //cout << "Cantidad de hilos:" << cantThreads << endl;
   string input_line;
@@ -52,18 +52,15 @@ int main(int argc, char *argv[]) {
       vectorImagen.push_back(input_line);
       }
   }
-  Matrix matrixOrigin = interpreter.createMatrix(vectorImagen);
-  Matrix& image(matrixOrigin);
-  //image.print();
+  Matrix image = interpreter.createMatrix(vectorImagen);
   for (int i = 2; i <= argc-2; i++) {
     string filterString(argv[i]);
-    Filter* filter = identifierFilter(filterString);
+    Filter* filter = identifierFilter(filterString,cantThreads);
     string matrixString(argv[i+1]);
     Matrix patron = interpreter.createMatrix(matrixString);
     //std::cout << "patron" << endl;
-    //patron.print();
-    Matrix resultado = filter->aplicateFilter(image,patron);
-    image.set(resultado);
+    // acá no pierdo memoria?
+    image = filter->aplicateFilter(image,patron);
     //image.print();
     i++;
   }

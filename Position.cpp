@@ -6,6 +6,10 @@ Position::Position(int rowNew,int columNew){
     this->row = rowNew;
     this->column = columNew;
 }
+Position::Position(){
+  this->row = 0;
+  this->column = 0;
+}
 
 
   //Método que te devuelve posicion relativa.
@@ -22,6 +26,12 @@ Position::Position(int rowNew,int columNew){
     Position newPosition(newRow,newColumn);
     return newPosition;
   }
+
+  void Position::set(int rowNew,int columnNew){
+    setRow(rowNew);
+    setColumn(columnNew);
+  }
+
 
   void Position::setColumn(int columnNew){
     this->column = columnNew;

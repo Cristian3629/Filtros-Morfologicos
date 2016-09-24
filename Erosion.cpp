@@ -2,12 +2,8 @@
 #include <list>
 using std::list;
 
-Erosion::Erosion(){
-  //std::cout << "Soy una erosion" << std::endl;
-}
-
+Erosion::Erosion(int cantidadHilos):Filter(cantidadHilos){}
 Erosion::~Erosion(){}
-
 
 //Cuando se aplica erosion se necesita chequear si hay coincidencia total
 //Pre:Recibe un list de valores booleanos

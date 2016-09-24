@@ -5,6 +5,12 @@ using std::string;
 using std::cout;
 using std::endl;
 
+
+
+Matrix::Matrix():cantRows(0),cantColumns(0){
+  std::cout << "Creando matrix vacia" << std::endl;
+}
+
 Matrix::Matrix(int rows, int column):cantRows(rows),cantColumns(column){
   this->matrix = new string*[cantRows];
   for (int i = 0; i < rows ; i++){
@@ -12,33 +18,35 @@ Matrix::Matrix(int rows, int column):cantRows(rows),cantColumns(column){
   }
 }
 
-Matrix::Matrix(const Matrix& otherMatrix):cantRows(otherMatrix.getCantRows()),
-cantColumns(otherMatrix.getCantColumns()){
-  //cout << "asignation per copy" << endl;
-  this->matrix = new string*[cantRows];
-  for (int i = 0; i < cantRows ; i++){
-    this->matrix[i]= new string[cantColumns];
-  }
-  int i,j;
-  for (i = 1; i <= cantRows; i++) {
-    for (j = 1; j <= cantColumns; j++) {
-      this->setElementPos(i,j,otherMatrix.getElementPos(i,j));
-    }
-  }
+//constructor por movimiento
+Matrix::Matrix(Matrix&& other):cantRows(0), cantColumns(0),matrix(nullptr){
+  std::cout << "constructor por movimiento" << std::endl;
+   matrix = other.matrix;
+   cantRows = other.cantRows;
+   cantColumns = other.cantColumns;
+   other.matrix = nullptr;
+   other.cantRows = 0;
+   other.cantColumns = 0;
 }
 
 
-void Matrix::set(const Matrix& otherMatrix){
-  if (otherMatrix.getCantColumns() == this->cantColumns &&
-  otherMatrix.getCantRows() == this->cantRows){
-    for (int i = 1; i <= cantRows; i++){
-      for (int j = 1; j <= cantColumns; j++) {
-        this->setElementPos(i,j,otherMatrix.getElementPos(i,j));
+// Asignacion por movimiento
+Matrix& Matrix::operator=(Matrix&& other){
+std::cout << "Asignacion por movimiento" << std::endl;
+std::cerr << "Dimensiones:" <<other.getCantRows()<<","<<other.getCantColumns()<< std::endl;
+  if (this != &other){
+      for (int i = 0; i < cantRows; i++) {
+        delete[] matrix[i];
       }
-    }
-  }else{
-    cout << "no se puede copiar los valores" << endl;
-  }
+      delete[](matrix);
+      matrix = other.matrix;
+      cantRows = other.cantRows;
+      cantColumns = other.cantColumns;
+      other.matrix = nullptr;
+      other.cantRows = 0;
+      other.cantColumns = 0;
+   }
+   return *this;
 }
 
 //verifica si el num de columna es valido

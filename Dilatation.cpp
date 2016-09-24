@@ -3,8 +3,7 @@
 #include <list> //list
 using std::list;
 
-Dilatation::Dilatation(){}
-
+Dilatation::Dilatation(int cantidadHilos):Filter(cantidadHilos){}
 Dilatation::~Dilatation(){}
 
 
