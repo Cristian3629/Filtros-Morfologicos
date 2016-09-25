@@ -9,11 +9,11 @@ Erosion::~Erosion(){}
 //Pre:Recibe un list de valores booleanos
 //Post: Chequea si existe coincidencia total
 bool Erosion::checkCoincidence(std::list<bool> lista){
-  //std::cout << "checkCoincidence erosion" << std::endl;
+  std::cout << "checkCoincidence erosion" << std::endl;
   list<bool>::iterator it;
   for (it=lista.begin(); it != lista.end(); ++it){
     bool valor = *it;
-    //std::cout << valor << " ";
+    std::cout << valor << " ";
     if (!valor){
       return false;
     }

@@ -2,7 +2,7 @@
 
 
 //constructor//
-ThreadParameters::ThreadParameters(Matrix& image,Matrix& patron,Position
+ThreadParameters::ThreadParameters(Matrix& image,Matrix& patron,Position&
   position,int id_cto,int cantidad,Repository* repo):_image(image),_patron(patron),
 _position(position),_id_cto(id_cto),_cantidadFilas(cantidad),_repo(repo){}
 

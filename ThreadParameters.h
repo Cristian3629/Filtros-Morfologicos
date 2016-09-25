@@ -18,7 +18,7 @@ private:
   int _cantidadFilas; //para definir cuantas filas tiene que procesar
   Repository* _repo; //donde voy a guardar la información
 public:
-    ThreadParameters(Matrix& image,Matrix& patron,Position position,int id_cto,int
+    ThreadParameters(Matrix& image,Matrix& patron,Position& position,int id_cto,int
       cantidad,Repository* repo);
     Position& getPosition() const;
     Matrix& getMatrixImage() const;

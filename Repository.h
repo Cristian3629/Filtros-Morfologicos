@@ -11,6 +11,7 @@
 class Repository{
 private:
   std::list<bool>* lista;
+  int cantidad;
 public:
     Repository();
     void addComparacion(bool valor);
