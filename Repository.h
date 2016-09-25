@@ -14,6 +14,7 @@ private:
 public:
     Repository();
     void addComparacion(bool valor);
+    std::list<bool> getList();
 		~Repository();
 };
 

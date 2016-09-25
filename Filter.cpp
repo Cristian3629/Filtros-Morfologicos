@@ -66,7 +66,7 @@ void* Filter::compare(void* dato){
     for (int j = 1; j <= image.getCantColumns(); j++) {
       positionImage.set(i+id_cto,j);
       Position positionPatron = posicionRelativa.sum(positionImage);
-      if (patron.positionIsValid(positionPatron)){
+      if (patron.positionIsValid(positionPatron) && image.positionIsValid(positionImage)){
         string elementoPatron = patron.getElementPos(positionPatron);
         if (elementoPatron.compare(asterisco) == 0){ //hay un asterisco en la patron
           string elementoImage = image.getElementPos(positionImage);
@@ -90,6 +90,15 @@ list<bool> Filter::compareMatrices(Matrix& image,Matrix& patron,Position& pos, i
     hilos.push_back(thread); //para luego hacer el join
     parametros.push_back(parametro);
   }
+
+  list<Thread*>::iterator it;
+  for (it = hilos.begin(); it != hilos.end(); it++) {
+    Thread* thread = *it;
+    thread->join((void**)NULL);
+    delete(thread);
+  }
+
+  return repository.getList();
 }
 
 
@@ -104,7 +113,7 @@ Matrix Filter::createImageDestin(int row,int column){
 }
 
 
-Matrix Filter::aplicateFilter(Matrix& image,Matrix& patron, int cantThreads){
+Matrix Filter::aplicateFilter(Matrix& image,Matrix& patron){
   Position pivote(0,0);
   int row = image.getCantRows();
   int column = image.getCantColumns();
@@ -113,7 +122,7 @@ Matrix Filter::aplicateFilter(Matrix& image,Matrix& patron, int cantThreads){
     for (int j = 1; j <= column; j++){
       pivote.setRow(i);
       pivote.setColumn(j);
-      list<bool> lista = compareMatrices(image,patron,pivote,cantThreads);
+      list<bool> lista = compareMatrices(image,patron,pivote,_cantidad);
       bool valor = checkCoincidence(lista);
       if (valor){
         pepe.setElementPos(pivote.getRow(),pivote.getColumn(),"#");

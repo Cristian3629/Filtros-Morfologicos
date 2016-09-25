@@ -16,8 +16,8 @@ private:
   int _cantidad;
 public:
     Filter(int cantidadHilos);
-    virtual Matrix aplicateFilter(Matrix& image,Matrix& patron,int cantThreads);
-    void* compare(void*);
+    virtual Matrix aplicateFilter(Matrix& image,Matrix& patron);
+    static void* compare(void*);
 		~Filter();
 };
 

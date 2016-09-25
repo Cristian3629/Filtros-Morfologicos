@@ -12,6 +12,11 @@ void Repository::addComparacion(bool valor){
   lista->push_back(valor);
 }
 
+list<bool> Repository::getList(){
+  return *lista;
+}
+
+
 Repository::~Repository(){
   delete(lista);
 }
