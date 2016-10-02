@@ -1,10 +1,11 @@
 #include "Matrix.h"
 #include <string>
+#include <mutex>
 
 using std::string;
 using std::cout;
 using std::endl;
-
+using std::mutex;
 
 
 Matrix::Matrix():cantRows(0),cantColumns(0){
@@ -20,7 +21,7 @@ Matrix::Matrix(int rows, int column):cantRows(rows),cantColumns(column){
 
 //constructor por movimiento
 Matrix::Matrix(Matrix&& other):cantRows(0), cantColumns(0),matrix(nullptr){
-  std::cout << "constructor por movimiento" << std::endl;
+  //std::cout << "constructor por movimiento" << std::endl;
    matrix = other.matrix;
    cantRows = other.cantRows;
    cantColumns = other.cantColumns;
@@ -32,8 +33,6 @@ Matrix::Matrix(Matrix&& other):cantRows(0), cantColumns(0),matrix(nullptr){
 
 // Asignacion por movimiento
 Matrix& Matrix::operator=(Matrix&& other){
-std::cout << "Asignacion por movimiento" << std::endl;
-std::cerr << "Dimensiones:" <<other.getCantRows()<<","<<other.getCantColumns()<< std::endl;
   if (this != &other){
       for (int i = 0; i < cantRows; i++) {
         delete[] matrix[i];
@@ -90,7 +89,9 @@ int Matrix::getCantRows() const{
   }
 
 void Matrix::setElementPos(int posRows, int posColumn, string element){
+  //_m.lock();
   matrix[posRows-1][posColumn-1] = element;
+  //_m.unlock();
 }
 
 string Matrix::getElementPos(int posRows,int posColumn) const{

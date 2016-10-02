@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   Interpreter interpreter;
   int cantThreads = atoi(argv[1]);
   vector<string> vectorImagen;
-  cout << "Cantidad de hilos:" << cantThreads << endl;
+  //cout << "Cantidad de hilos:" << cantThreads << endl;
   string input_line;
   if (argc < 2){
     cout << "Falta argumentos" << endl;
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     getline(cin, input_line);
     std::cerr << "input_line:" <<input_line<< std::endl;
     size_t pos = input_line.find(" ");
-    cout << pos << endl;
+    //cout << pos << endl;
     string col =  input_line.substr(0,pos);
     cout <<"col:" <<col << endl;
     string row = input_line.substr(pos+1);
@@ -50,26 +50,34 @@ int main(int argc, char *argv[]) {
     vectorImagen.push_back(col);
   }
   while (cin){
+    std::cout << "dentro del while" << std::endl;
     getline(cin, input_line);
-    if (input_line.compare("\n") == 1){
-      //std::cout << input_line << std::endl;
+    std::cout << "input_line:" <<input_line<< std::endl;
+    if (input_line.compare("\n") != 0){
+      std::cout <<"if input_line:"<< input_line << std::endl;
       vectorImagen.push_back(input_line);
+      std::cout << "long del vector al insertar:"<< vectorImagen.size()<< std::endl;
       }
   }
   std::cout << "interpreter.createMatrix para __stdin__" << std::endl;
   Matrix image = interpreter.createMatrix(vectorImagen);
+  image.print();
   for (int i = 2; i <= argc-2; i++) {
     string filterString(argv[i]);
-    Filter* filter = identifierFilter(filterString,cantThreads);
-    string matrixString(argv[i+1]);
-    Matrix patron = interpreter.createMatrix(matrixString);
-    //std::cout << "patron" << endl;
-    // acá no pierdo memoria?
-    image = filter->aplicateFilter(image,patron);
-    //image.print();
+    string dilatationString("d");
+    if (!filterString.compare(dilatationString)){
+      Dilatation filter(cantThreads);
+      string matrixString(argv[i+1]);
+      Matrix patron = interpreter.createMatrix(matrixString);
+      image = filter.aplicateFilter(image,patron);
+    }else{
+      Erosion filter(cantThreads);
+      string matrixString(argv[i+1]);
+      Matrix patron = interpreter.createMatrix(matrixString);
+      image = filter.aplicateFilter(image,patron);
+    }
     i++;
   }
-  std::cout <<image.getCantColumns()<<" "<<image.getCantRows()<< std::endl;
   image.print();
   return 0;
 }

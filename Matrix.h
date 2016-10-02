@@ -5,6 +5,7 @@
 #include <vector>
 #include <stdlib.h> // malloc,free
 #include <string>
+#include <mutex>
 
 class Matrix{
 private:

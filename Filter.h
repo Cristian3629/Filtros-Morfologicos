@@ -11,14 +11,14 @@
 class Filter{
 private:
   std::list<bool> compareMatrices(Matrix& image,Matrix& patron,Position& pos, int cantidadThreads);
-  virtual bool checkCoincidence(std::list<bool> lista) = 0;
   Matrix createImageDestin(int row,int column);
+  bool outRegion(Matrix& image,Matrix& patron,Position& position);
   int _cantidad;
 public:
     Filter(int cantidadHilos);
     virtual Matrix aplicateFilter(Matrix& image,Matrix& patron);
-    static void* compare(void*);
-		~Filter();
+    virtual bool checkCoincidence(std::list<bool> lista) = 0;
+		virtual ~Filter();
 };
 
 #endif /* FILTER_H_ */

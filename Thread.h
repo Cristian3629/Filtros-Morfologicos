@@ -1,22 +1,23 @@
 #ifndef THREAD_H_
 #define THREAD_H_
 
-#include <pthread.h>
+#include <thread>
 
-typedef void* thread_run_data_t;
-typedef void* (*thread_run_func_t)(thread_run_data_t run_data);
+
 
 class Thread{
-	pthread_t thread;
-	thread_run_func_t run_func;
-	thread_run_data_t run_data;
+private:
+	std::thread thread;
+	Thread(const Thread&) = delete;
+	Thread& operator=(const Thread&) = delete;
+	Thread(Thread&& other);
+	Thread& operator=(Thread&& other);
 public:
-	Thread(thread_run_func_t run_func, thread_run_data_t run_data);
-	void destroy();
+	Thread();
 	void start();
-	void join(void** result);
+	void join();
 	virtual ~Thread();
-	static void* starter(void* args);
+	virtual void run() = 0;
 };
 
 #endif /*THREAD_H_*/

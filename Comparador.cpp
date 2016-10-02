@@ -6,44 +6,77 @@
 
 using std::string;
 
-void* Comparador::compare(void* dato){
-  ThreadParameters* parameter = (ThreadParameters*)dato;
-  int cantidad = 0;
-  // Extraigo todos los datos
-  Matrix& image = parameter->getMatrixImage();
-  Matrix& patron = parameter->getMatrixPatron();
-  //std::cout << "posicion de la matriz" << std::endl;
-  Position& posicion = parameter->getPosition(); //posicion donde se centra el patron
-  //posicion.print();
-  int cantidadDeFilas = parameter->getCantidadFilas();
-  int id_cto = parameter->getIdConjunto();
-  Repository* repository = parameter->getRepository();
-  string asterisco("#");
-  Position posMedia(patron.getCantRows()/2 + 1, patron.getCantColumns()/2 + 1);
-  Position posicionRelativa = posicion.relativityPosition(posMedia);
-  Position positionImage(0,0);
-  for (int i = 0; i < cantidadDeFilas; i++) {
-    for (int j = 1; j <= image.getCantColumns(); j++) {
-      //std::cout << "j:" <<j<< std::endl;
-      positionImage.set(i+id_cto,j);
+Comparador::Comparador(Matrix& image,Matrix& patron,Filter& filter, int section, Matrix& destino, int cantidad):_image(image),_patron(patron),
+_filter(filter),_section(section),_destino(destino),_cantidad(cantidad){
+  std::cout << "Constructor()" << std::endl;
+  _image.print();
+}
 
-      //std::cout << "en la posicion de la imagen";
-      //positionImage.print();
-      Position positionPatron = posicionRelativa.sum(positionImage);
-      //std::cout << "le corresponde";
-      //positionPatron.print();
-      if (patron.positionIsValid(positionPatron) && image.positionIsValid(positionImage)){
-        std::cout <<positionImage.getRow()<<","<<positionImage.getColumn()<<"->"<<positionPatron.getRow()<<","<<positionPatron.getColumn()<< " ";
-        string elementoPatron = patron.getElementPos(positionPatron);
-        if (elementoPatron.compare(asterisco) == 0){ //hay un asterisco en la patron
-          cantidad++;
-          string elementoImage = image.getElementPos(positionImage);
-          repository->addComparacion(!elementoImage.compare(asterisco));
+
+Comparador::~Comparador(){}
+
+std::list<bool> Comparador::compare(Position& position){
+  std::cout << "image" << std::endl;
+    _image.print();
+    std::cout << "patron" << std::endl;
+    _patron.print();
+    std::cout << "compare()" << std::endl;
+    std::list<bool> lista;
+    int row = _patron.getCantRows();
+    int column = _patron.getCantColumns();
+    std::cout << "row:" <<row<<" column:"<<column<< std::endl;
+    Position posicionMedia(row/2 + 1, column/2 + 1);
+    Position posicionRelativa = posicionMedia.relativityPosition(position);
+    Position otherPosition(0,0);
+    std::string asterisco("#");
+    bool valor;
+    int i,j;
+    for (i = 1; i <= row; i++) {
+      for (j = 1; j <= column; j++) {
+         otherPosition.setRow(i);
+         otherPosition.setColumn(j);
+         Position posImagen = posicionRelativa.sum(otherPosition);
+         //Posicion no valida
+         if (_image.positionIsValid(posImagen) == 0){
+           lista.push_back(false);
+         }
+        else{
+          //posicion valida
+          if (asterisco.compare(_patron.getElementPos(i,j)) == 0){
+            std::string elemento = _image.getElementPos(posImagen);
+            valor =  elemento.compare(asterisco);
+            if (valor == 0){
+              lista.push_back(true);
+            }else{
+              lista.push_back(false);
+            }
+          }
         }
       }
     }
-    std::cout << "" << std::endl;
+      //std::cout << "exit compare()" << std::endl;
+      return lista;
+    }
+
+void Comparador::setImageDestin(Position& position){
+  std::cout << "setImageDestin()" << std::endl;
+  _destino.setElementPos(position.getRow(),position.getColumn(),"#");
+  _destino.print();
+}
+
+void Comparador::run(){
+  std::cout << "Comparador::run()" << std::endl;
+  std::cout << "cantidad de filas:" <<_cantidad<< std::endl;
+  std::cout << "section:" <<_section<< std::endl;
+  int posInitial = _cantidad*_section;
+  for (int i = posInitial; i < posInitial + _cantidad; i++){
+    for (int j = 0; j < _image.getCantColumns(); j++) {
+      std::cout << "Voy a procesar la posicion:" <<i<<","<<j<< std::endl;
+      Position position(i,j);
+      std::list<bool> lista = compare(position);
+      if (_filter.checkCoincidence(lista)){
+        setImageDestin(position);
+      }
+    }
   }
-  std::cout << "soy soy el hilo:" <<id_cto<<"y tengo que procesar: "<<cantidadDeFilas<<"filas"<<"y procese:"<<cantidad<< std::endl;
-  return (void*)NULL;
-  }
+}
