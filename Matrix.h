@@ -13,6 +13,7 @@ private:
 	bool rowPositionValid(int row);
 	int cantRows,cantColumns;
 	std::string** matrix; /*puntero a la matriz*/
+	std::mutex* mtx;
 public:
 		//no copiable
 		Matrix(const Matrix &other) = delete;

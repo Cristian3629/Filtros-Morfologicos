@@ -7,7 +7,7 @@ class Dilatation : public Filter{
 private:
   bool checkCoincidence(std::list<bool> lista);
 public:
-  Dilatation(int cantidadHilos);
+  explicit Dilatation(int cantidadHilos);
   ~Dilatation();
 };
 

@@ -1,10 +1,12 @@
 #ifndef COMPARADOR_H_
 #define COMPARADOR_H_
 
+#include <list> //list
 #include <iostream> //cout
 #include "Thread.h"
 #include "Matrix.h"
 #include "Filter.h"
+
 class Comparador: public Thread{
 private:
 	Matrix& _image;
@@ -15,7 +17,8 @@ private:
 	int _cantidad; //cantidad de filas a procesar
 	void setImageDestin(Position& position);
 public:
-	Comparador(Matrix& image,Matrix& patron,Filter& filter, int section, Matrix& destino, int cantidad);
+	Comparador(Matrix& image,Matrix& patron,Filter& filter, int section, Matrix&
+		destino, int cantidad);
   std::list<bool> compare(Position& position);
 	void run();
 	virtual ~Comparador();

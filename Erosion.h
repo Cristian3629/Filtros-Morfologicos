@@ -7,7 +7,7 @@ class Erosion : public Filter{
 private:
   bool checkCoincidence(std::list<bool> lista);
 public:
-  Erosion(int cantidadHilos);
+  explicit Erosion(int cantidadHilos);
   ~Erosion();
 };
 

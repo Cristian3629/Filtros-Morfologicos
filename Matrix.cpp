@@ -9,7 +9,7 @@ using std::mutex;
 
 
 Matrix::Matrix():cantRows(0),cantColumns(0){
-  std::cout << "Creando matrix vacia" << std::endl;
+  //std::cout << "Creando matrix vacia" << std::endl;
 }
 
 Matrix::Matrix(int rows, int column):cantRows(rows),cantColumns(column){
@@ -90,7 +90,9 @@ int Matrix::getCantRows() const{
 
 void Matrix::setElementPos(int posRows, int posColumn, string element){
   //_m.lock();
-  matrix[posRows-1][posColumn-1] = element;
+  if (columnPositionValid(posColumn) && rowPositionValid(posRows)){
+    matrix[posRows-1][posColumn-1] = element;
+  }
   //_m.unlock();
 }
 

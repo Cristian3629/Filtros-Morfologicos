@@ -41,23 +41,23 @@ Matrix Interpreter::createMatrix(const string& matrix){
 }
 
 Matrix Interpreter::createMatrix(vector<string> elems){
-  std::cout << "createMatrix from vector" << std::endl;
-  std::cout << "longitud del vector" <<elems.size()<< std::endl;
+  //std::cout << "createMatrix from vector" << std::endl;
+  //std::cout << "longitud del vector" <<elems.size()<< std::endl;
   std::string::size_type sz;
   vector<string>::iterator it = elems.begin();
   int row = std::stoi(*it,&sz);
   ++it;
   int colum = std::stoi(*it,&sz);
   Matrix patron(row,colum);
-  std::cout <<row<<","<<colum<<std::endl;
-  std::cout << "asasa" << std::endl;
+  //std::cout <<row<<","<<colum<<std::endl;
+  //std::cout << "asasa" << std::endl;
   ++it;
   int size = elems.size();
-  std::cout << "size:" <<size<< std::endl;
+  //std::cout << "size:" <<size<< std::endl;
   for (int i = 2; i < size-1 ; i++) {
-    std::cout << "dentro del for" << std::endl;
+    //std::cout << "dentro del for" << std::endl;
     string fila = elems[i];
-    std::cout <<"i="<<i<<fila<< std::endl;
+    //std::cout <<"i="<<i<<fila<< std::endl;
     for (int j = 0 ; j < colum ; j++) {
       string elemento = fila.substr(j,1);
       //std::cout << "Elemento:" <<elemento<< std::endl;
@@ -65,7 +65,7 @@ Matrix Interpreter::createMatrix(vector<string> elems){
       patron.setElementPos(i-1,j+1,elemento);
     }
   }
-  patron.print();
+  //patron.print();
   return patron;
 }
 

@@ -7,8 +7,8 @@ Position::Position(int rowNew,int columNew){
     this->column = columNew;
     // std::cout <<"Direccion de row:"<< &row << std::endl;
     // std::cout <<"Direccion de column:"<< &column << std::endl;
-
 }
+
 Position::Position(){
   this->row = 0;
   this->column = 0;
