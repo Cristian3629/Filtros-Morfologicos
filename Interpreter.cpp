@@ -16,24 +16,7 @@ Interpreter::~Interpreter(){}
 Matrix Interpreter::createMatrix(const string& matrix){
   vector<string> elems;
   split(matrix,' ', elems);
-  vector<string>::iterator it;
-  string::size_type sz;
-  it = elems.begin();
-  int row = stoi(*it,&sz);
-  ++it;
-  int colum = stoi(*it,&sz);
-  Matrix patron(row,colum);
-  int i = 0;
-  ++it;
-  for (; it!=elems.end() ; ++it) {
-    string fila = *it;
-    for (int j = 0 ; j < colum ; j++) {
-      string elemento = fila.substr(j,1);
-      patron.setElementPos(i+1,j+1,elemento);
-    }
-    i++;
-  }
-  return patron;
+  return createMatrix(elems);
 }
 
 Matrix Interpreter::createMatrix(vector<string> elems){
