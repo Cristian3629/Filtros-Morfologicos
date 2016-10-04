@@ -2,10 +2,11 @@
 #define COMPARADOR_H_
 
 #include <list> //list
-#include "Matrix.h" 
+#include "Matrix.h"
 #include "Filter.h"
+#include "Thread.h"
 
-class Comparador: public Thread{
+class Comparador: public Thread {
 private:
 	Matrix& _image;
 	Matrix& _patron;
@@ -13,7 +14,7 @@ private:
 	int _section; //
 	Matrix& _destino;
 	int _cantidad; //cantidad de filas a procesar
-	void setImageDestin(Position& position);
+	void setImageDestin(const Position& position);
 public:
 	Comparador(Matrix& image,Matrix& patron,Filter& filter, int section, Matrix&
 		destino, int cantidad);

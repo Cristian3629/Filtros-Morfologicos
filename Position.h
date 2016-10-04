@@ -1,7 +1,6 @@
 #ifndef POSITION_H_
 #define POSITION_H_
 
-#include <iostream> //cout
 
 
 class Position{
@@ -11,8 +10,8 @@ public:
 	Position();
 	Position relativityPosition(Position& position);
 	Position sum(Position& position);
-	int getColumn();
-	int getRow();
+	int getColumn() const;
+	int getRow() const;
 	void setColumn(int columnNew);
 	void setRow(int rowNew);
 	void set(int columnNew,int rowNew);

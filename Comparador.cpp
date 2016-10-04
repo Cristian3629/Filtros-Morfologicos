@@ -1,8 +1,6 @@
 #include "Comparador.h"
 #include "Matrix.h"
-#include "Repository.h"
 #include "Position.h"
-
 #include <string>
 #include <list>
 using std::string;
@@ -48,7 +46,7 @@ std::list<bool> Comparador::compare(Position& position){
       return lista;
     }
 
-void Comparador::setImageDestin(Position& position){
+void Comparador::setImageDestin(const Position& position){
   _destino.setElementPos(position.getRow(),position.getColumn(),"#");
 }
 

@@ -11,8 +11,8 @@ private:
 	bool columnPositionValid(int column) const;
 	bool rowPositionValid(int row) const;
 	int cantRows,cantColumns;
-	std::string** matrix; /*puntero a la matriz*/
-	std::mutex* mtx;
+	std::vector<std::vector<std::string>> matrix;
+	std::mutex mtx;
 public:
 		//no copiable
 		Matrix(const Matrix &other) = delete;
@@ -26,7 +26,7 @@ public:
     std::string getElementPos(int posColumn, int posRows) const;
 		std::string getElementPos(Position position) const;
 		void setElementPos(int posRows,int posColumn, std::string element);
-		bool positionIsValid(Position& position);
+		bool positionIsValid(const Position& position);
 		void dimesions();
 		void print();
 		~Matrix();

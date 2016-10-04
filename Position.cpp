@@ -1,12 +1,11 @@
 #include "Position.h"
 
+#include <iostream> //cout
 
 
 Position::Position(int rowNew,int columNew){
     this->row = rowNew;
     this->column = columNew;
-    // std::cout <<"Direccion de row:"<< &row << std::endl;
-    // std::cout <<"Direccion de column:"<< &column << std::endl;
 }
 
 Position::Position(){
@@ -31,11 +30,8 @@ Position::Position(){
   }
 
   void Position::set(int rowNew,int columnNew){
-    // std::cout<< "Position::set: " <<rowNew<<","<<columnNew<< std::endl;
     setRow(rowNew);
     setColumn(columnNew);
-    // std::cout << "despues de setear" << std::endl;
-    // this->print();
   }
 
 
@@ -51,11 +47,11 @@ Position::Position(){
     this->row = rowNew;
   }
 
-  int Position::getColumn(){
+  int Position::getColumn() const{
     return column;
   }
 
-  int Position::getRow(){
+  int Position::getRow() const{
     return row;
   }
 

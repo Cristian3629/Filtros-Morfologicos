@@ -1,29 +1,34 @@
 #include "Matrix.h"
 #include <string>
 #include <mutex>
+#include <iostream> //cout
+#include <vector>
+
 
 using std::string;
 using std::cout;
 using std::endl;
 using std::mutex;
-
+using std::vector;
 
 Matrix::Matrix():cantRows(0),cantColumns(0){
+  mutex mtx;
 }
 
 Matrix::Matrix(int rows, int column):cantRows(rows),cantColumns(column){
-  this->matrix = new string*[cantRows];
-  for (int i = 0; i < rows ; i++){
-    this->matrix[i]= new string[cantColumns];
+  vector<vector<string> > aux(cantRows);
+  for ( int i = 0 ; i < cantRows ; i++ ){
+    aux[i].resize(cantColumns);
   }
+  matrix = aux;
+  mutex mtx;
 }
 
 //constructor por movimiento
-Matrix::Matrix(Matrix&& other):cantRows(0), cantColumns(0),matrix(nullptr){
-   matrix = other.matrix;
+Matrix::Matrix(Matrix&& other):cantRows(0), cantColumns(0){
+   matrix = std::move(other.matrix);
    cantRows = other.cantRows;
    cantColumns = other.cantColumns;
-   other.matrix = nullptr;
    other.cantRows = 0;
    other.cantColumns = 0;
 }
@@ -32,14 +37,9 @@ Matrix::Matrix(Matrix&& other):cantRows(0), cantColumns(0),matrix(nullptr){
 // Asignacion por movimiento
 Matrix& Matrix::operator=(Matrix&& other){
   if (this != &other){
-      for (int i = 0; i < cantRows; i++) {
-        delete[] matrix[i];
-      }
-      delete[](matrix);
-      matrix = other.matrix;
+      matrix = std::move(other.matrix);
       cantRows = other.cantRows;
       cantColumns = other.cantColumns;
-      other.matrix = nullptr;
       other.cantRows = 0;
       other.cantColumns = 0;
    }
@@ -72,7 +72,7 @@ void Matrix::print(){
 }
 
 //verifica si la posicion fila,colum es valida
-bool Matrix::positionIsValid(Position&  position) {
+bool Matrix::positionIsValid(const Position&  position){
     return columnPositionValid(position.getColumn()) &&
     rowPositionValid(position.getRow());
   }
@@ -86,11 +86,11 @@ int Matrix::getCantRows() const{
   }
 
 void Matrix::setElementPos(int posRows, int posColumn, string const element){
-  //_m.lock();
+  mtx.lock();
   if (columnPositionValid(posColumn) && rowPositionValid(posRows)){
-    matrix[posRows-1][posColumn-1] = element;
+    this->matrix[posRows-1][posColumn-1] = element;
   }
-  //_m.unlock();
+  mtx.unlock();
 }
 
 string Matrix::getElementPos(int posRows,int posColumn) const{
@@ -103,8 +103,8 @@ string Matrix::getElementPos(Position position) const{
 
 
 Matrix::~Matrix(){
-  for (int i = 0; i < cantRows; i++) {
-    delete[] matrix[i];
-  }
-  delete[](matrix);
+  // for (int i = 0; i < cantRows; i++) {
+  //   delete[] matrix[i];
+  // }
+  // delete[](matrix);
 }
