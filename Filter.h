@@ -4,8 +4,7 @@
 #include "Position.h"
 #include "Matrix.h"
 #include <list>
-#include "Repository.h"
-#include "Thread.h"
+//#include "Thread.h"
 
 class Filter{
 private:

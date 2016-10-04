@@ -2,9 +2,7 @@
 #define COMPARADOR_H_
 
 #include <list> //list
-#include <iostream> //cout
-#include "Thread.h"
-#include "Matrix.h"
+#include "Matrix.h" 
 #include "Filter.h"
 
 class Comparador: public Thread{

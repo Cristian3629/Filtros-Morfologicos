@@ -1,6 +1,5 @@
 #include <iostream> //cout
 #include <string> //compare
-#include <string.h> //compare
 #include <vector>  //vector
 #include "Position.h"
 #include "Matrix.h"
@@ -14,24 +13,22 @@ using std::endl;
 using std::cin;
 using std::vector;
 
-Filter* identifierFilter(string& filterString, int cantThreads){
-  string dilatationString("d");
-  if (!filterString.compare(dilatationString)){
-    Dilatation* dilatation = new Dilatation(cantThreads);
-    return dilatation;
-  }
-  Erosion* erosion = new Erosion(cantThreads);
-  return erosion;
-}
+// Filter* identifierFilter(string& filterString, int cantThreads){
+//   string dilatationString("d");
+//   if (!filterString.compare(dilatationString)){
+//     Dilatation* dilatation = new Dilatation(cantThreads);
+//     return dilatation;
+//   }
+//   Erosion* erosion = new Erosion(cantThreads);
+//   return erosion;
+// }
 
 //    0      1              2           3         4          5
 // ./tp <numero de hilos> <filtro 1> <patron 1> <filtro 2> <patron 2>  ...
 int main(int argc, char *argv[]) {
-  //std::cout << "main" << std::endl;
   Interpreter interpreter;
   int cantThreads = atoi(argv[1]);
   vector<string> vectorImagen;
-  //cout << "Cantidad de hilos:" << cantThreads << endl;
   string input_line;
   if (argc < 2){
     cout << "Falta argumentos" << endl;
@@ -39,13 +36,9 @@ int main(int argc, char *argv[]) {
   }
   if (cin) {
     getline(cin, input_line);
-    //std::cerr << "input_line:" <<input_line<< std::endl;
     size_t pos = input_line.find(" ");
-    //cout << pos << endl;
     string col =  input_line.substr(0,pos);
-    //cout <<"col:" <<col << endl;
     string row = input_line.substr(pos+1);
-    //cout <<"row:"<< row << endl;
     vectorImagen.push_back(row);
     vectorImagen.push_back(col);
   }
@@ -56,7 +49,6 @@ int main(int argc, char *argv[]) {
     }
   }
   Matrix image = interpreter.createMatrix(vectorImagen);
-  //image.print();
   for (int i = 2; i <= argc-2; i++) {
     string filterString(argv[i]);
     string dilatationString("d");
@@ -65,13 +57,11 @@ int main(int argc, char *argv[]) {
       string matrixString(argv[i+1]);
       Matrix patron = interpreter.createMatrix(matrixString);
       image = filter.aplicateFilter(image,patron);
-      //image.print();
     }else{
       Erosion filter(cantThreads);
       string matrixString(argv[i+1]);
       Matrix patron = interpreter.createMatrix(matrixString);
       image = filter.aplicateFilter(image,patron);
-      //image.print();
     }
     i++;
   }

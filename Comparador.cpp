@@ -19,7 +19,6 @@ std::list<bool> Comparador::compare(Position& position){
     std::list<bool> lista;
     int row = _patron.getCantRows();
     int column = _patron.getCantColumns();
-    //std::cout << "row:" <<row<<" column:"<<column<< std::endl;
     Position posicionMedia(row/2 + 1, column/2 + 1);
     Position posicionRelativa = posicionMedia.relativityPosition(position);
     Position otherPosition(0,0);
@@ -31,11 +30,9 @@ std::list<bool> Comparador::compare(Position& position){
          otherPosition.setRow(i);
          otherPosition.setColumn(j);
          Position posImagen = posicionRelativa.sum(otherPosition);
-         //Posicion no valida
          if (_image.positionIsValid(posImagen) == 0){
            lista.push_back(false);
          }else{
-          //posicion valida
           if (asterisco.compare(_patron.getElementPos(i,j)) == 0){
             std::string elemento = _image.getElementPos(posImagen);
             valor =  elemento.compare(asterisco);
@@ -52,19 +49,13 @@ std::list<bool> Comparador::compare(Position& position){
     }
 
 void Comparador::setImageDestin(Position& position){
-  //std::cout << "setImageDestin()" << std::endl;
   _destino.setElementPos(position.getRow(),position.getColumn(),"#");
-  //_destino.print();
 }
 
 void Comparador::run(){
-  //std::cout << "Comparador::run()" << std::endl;
-  //std::cout << "cantidad de filas:" <<_cantidad<< std::endl;
-  //std::cout << "section:" <<_section<< std::endl;
   int posInitial = _cantidad*_section;
   for (int i = posInitial; i < posInitial + _cantidad; i++){
     for (int j = 0; j < _image.getCantColumns(); j++) {
-      //std::cout << "Voy a procesar la posicion:" <<i+1<<","<<j+1<< std::endl;
       Position position(i+1,j+1);
       std::list<bool> lista = compare(position);
       if (_filter.checkCoincidence(lista)){

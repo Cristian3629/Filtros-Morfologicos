@@ -9,7 +9,6 @@ using std::mutex;
 
 
 Matrix::Matrix():cantRows(0),cantColumns(0){
-  //std::cout << "Creando matrix vacia" << std::endl;
 }
 
 Matrix::Matrix(int rows, int column):cantRows(rows),cantColumns(column){
@@ -21,7 +20,6 @@ Matrix::Matrix(int rows, int column):cantRows(rows),cantColumns(column){
 
 //constructor por movimiento
 Matrix::Matrix(Matrix&& other):cantRows(0), cantColumns(0),matrix(nullptr){
-  //std::cout << "constructor por movimiento" << std::endl;
    matrix = other.matrix;
    cantRows = other.cantRows;
    cantColumns = other.cantColumns;
@@ -49,12 +47,12 @@ Matrix& Matrix::operator=(Matrix&& other){
 }
 
 //verifica si el num de columna es valido
-bool Matrix::columnPositionValid(int column){
+bool Matrix::columnPositionValid(int column) const {
     return 0 < column && column <= this->cantColumns;
 }
 
 //verifica si el num de fila es valido
-bool Matrix::rowPositionValid(int row){
+bool Matrix::rowPositionValid(int row) const {
     return 0 < row && row <= this->cantRows;
   }
 
@@ -71,11 +69,10 @@ void Matrix::print(){
     }
     cout << "" << endl;
   }
-  //cout << "++++++++++++++" << endl;
 }
 
 //verifica si la posicion fila,colum es valida
-bool Matrix::positionIsValid(Position& position){
+bool Matrix::positionIsValid(Position&  position) {
     return columnPositionValid(position.getColumn()) &&
     rowPositionValid(position.getRow());
   }
@@ -88,7 +85,7 @@ int Matrix::getCantRows() const{
     return cantRows;
   }
 
-void Matrix::setElementPos(int posRows, int posColumn, string element){
+void Matrix::setElementPos(int posRows, int posColumn, string const element){
   //_m.lock();
   if (columnPositionValid(posColumn) && rowPositionValid(posRows)){
     matrix[posRows-1][posColumn-1] = element;
@@ -106,7 +103,6 @@ string Matrix::getElementPos(Position position) const{
 
 
 Matrix::~Matrix(){
-  //cout << "destructor called" << endl;
   for (int i = 0; i < cantRows; i++) {
     delete[] matrix[i];
   }

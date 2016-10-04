@@ -3,14 +3,13 @@
 
 #include "Position.h"
 #include <vector>
-#include <stdlib.h> // malloc,free
 #include <string>
 #include <mutex>
 
 class Matrix{
 private:
-	bool columnPositionValid(int column);
-	bool rowPositionValid(int row);
+	bool columnPositionValid(int column) const;
+	bool rowPositionValid(int row) const;
 	int cantRows,cantColumns;
 	std::string** matrix; /*puntero a la matriz*/
 	std::mutex* mtx;
